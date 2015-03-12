@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+		<Title>Stored Procedure with reader</Title>
+		<Description>Runs a stored procedure and loops through the reader results</Description>
+		<Shortcut>sprocr</Shortcut>
+		<SnippetTypes>
+			<SnippetType>Expansion</SnippetType>
+		</SnippetTypes>
+    </Header>
+    <Snippet>
+	  <Declarations>
+		<Literal>
+		  <ID>connectionString</ID>
+		  <ToolTip>The connection string for the DB you wish to use</ToolTip>
+		  <Default>ConnectionString</Default>
+		</Literal>
+		<Literal>
+		  <ID>command</ID>
+		  <ToolTip>The command to execute</ToolTip>
+		  <Default>StoredProc</Default>
+		</Literal>		
+	  </Declarations>
+	  <Code Language="CSharp">
+		<![CDATA[using (var sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["$connectionString$"].ConnectionString))
+		using(var sqlCommand = new SqlCommand("$command$", sqlConnection))
+		{
+			sqlCommand.CommandType = CommandType.StoredProcedure;				
+			sqlConnection.Open();
+			using (var reader = sqlCommand.ExecuteReader())
+			{
+				while(reader.Read())
+				{
+					$end$
+				}				
+			}
+		}
+		]]>
+	  </Code>
+	</Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+		<Title>Stored Procedure none query</Title>
+		<Description>Runs a stored procedure as a none query</Description>
+		<Shortcut>sprocnq</Shortcut>
+		<SnippetTypes>
+			<SnippetType>Expansion</SnippetType>
+		</SnippetTypes>
+    </Header>
+    <Snippet>
+	  <Declarations>
+		<Literal>
+		  <ID>connectionString</ID>
+		  <ToolTip>The connection string for the DB you wish to use</ToolTip>
+		  <Default>ConnectionString</Default>
+		</Literal>
+		<Literal>
+		  <ID>command</ID>
+		  <ToolTip>The command to execute</ToolTip>
+		  <Default>StoredProc</Default>
+		</Literal>		
+	  </Declarations>
+	  <Code Language="CSharp">
+		<![CDATA[using (var sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["$connectionString$"].ConnectionString))
+		using(var sqlCommand = new SqlCommand("$command$", sqlConnection))
+		{
+			sqlCommand.CommandType = CommandType.StoredProcedure;				
+			sqlConnection.Open();
+			sqlCommand.ExecuteNonQuery();
+		}
+		]]>
+	  </Code>
+	</Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+		<Title>Stored Procedure parameter</Title>
+		<Description>Adds a parameter to a stored procedure command and loops through the reader results</Description>
+		<Shortcut>prm</Shortcut>
+		<SnippetTypes>
+			<SnippetType>Expansion</SnippetType>
+		</SnippetTypes>
+    </Header>
+    <Snippet>
+	  <Declarations>
+		<Literal>
+		  <ID>paramName</ID>
+		  <ToolTip>The parameter name</ToolTip>
+		  <Default>ParamName</Default>
+		</Literal>
+		<Literal>
+		  <ID>paramValue</ID>
+		  <ToolTip>The parameter value</ToolTip>
+		  <Default>Value</Default>
+		</Literal>		
+	  </Declarations>
+	  <Code Language="CSharp">
+		<![CDATA[sqlCommand.Parameters.AddWithValue("@$paramName$", $paramValue$);$end$]]>
+	  </Code>
+	</Snippet>
+  </CodeSnippet>
+</CodeSnippets>

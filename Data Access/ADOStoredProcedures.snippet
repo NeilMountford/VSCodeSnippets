@@ -28,15 +28,14 @@
 		{
 			sqlCommand.CommandType = CommandType.StoredProcedure;				
 			sqlConnection.Open();
-			using (var reader = sqlCommand.ExecuteReader())
+			using (var sqlReader = sqlCommand.ExecuteReader())
 			{
-				while(reader.Read())
+				while(sqlReader.Read())
 				{
 					$end$
 				}				
 			}
-		}
-		]]>
+		}]]>
 	  </Code>
 	</Snippet>
   </CodeSnippet>
@@ -69,8 +68,7 @@
 			sqlCommand.CommandType = CommandType.StoredProcedure;				
 			sqlConnection.Open();
 			sqlCommand.ExecuteNonQuery();
-		}
-		]]>
+		}]]>
 	  </Code>
 	</Snippet>
   </CodeSnippet>

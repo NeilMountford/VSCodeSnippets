@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+		<Title>Stored Procedure with reader (async)</Title>
+		<Description>Runs a stored procedure and loops through the reader results</Description>
+		<Shortcut>asprocr</Shortcut>
+		<SnippetTypes>
+			<SnippetType>Expansion</SnippetType>
+		</SnippetTypes>
+    </Header>
+    <Snippet>
+	  <Declarations>
+		<Literal>
+		  <ID>connectionString</ID>
+		  <ToolTip>The connection string for the DB you wish to use</ToolTip>
+		  <Default>ConnectionString</Default>
+		</Literal>
+		<Literal>
+		  <ID>command</ID>
+		  <ToolTip>The command to execute</ToolTip>
+		  <Default>StoredProc</Default>
+		</Literal>		
+	  </Declarations>
+	  <Code Language="CSharp">
+		<![CDATA[using(var sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["$connectionString$"].ConnectionString))        
+        using (var sqlCommand = new SqlCommand("$command$", sqlConnection))
+        {
+        	await sqlConnection.OpenAsync();
+            sqlCommand.CommandType = CommandType.StoredProcedure;
+            
+            using (var sqlReader = await sqlCommand.ExecuteReaderAsync())
+            {
+                while(await sqlReader.ReadAsync())
+                {
+                    $end$
+                }
+            }
+        }]]>
+	  </Code>
+	</Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+		<Title>Stored Procedure none query (async)</Title>
+		<Description>Runs a stored procedure as a none query</Description>
+		<Shortcut>asprocnq</Shortcut>
+		<SnippetTypes>
+			<SnippetType>Expansion</SnippetType>
+		</SnippetTypes>
+    </Header>
+    <Snippet>
+	  <Declarations>
+		<Literal>
+		  <ID>connectionString</ID>
+		  <ToolTip>The connection string for the DB you wish to use</ToolTip>
+		  <Default>ConnectionString</Default>
+		</Literal>
+		<Literal>
+		  <ID>command</ID>
+		  <ToolTip>The command to execute</ToolTip>
+		  <Default>StoredProc</Default>
+		</Literal>		
+	  </Declarations>
+	  <Code Language="CSharp">
+		<![CDATA[using(var sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["$connectionString$"].ConnectionString))        
+        using (var sqlCommand = new SqlCommand("$command$", sqlConnection))
+        {
+        	await sqlConnection.OpenAsync();
+            sqlCommand.CommandType = CommandType.StoredProcedure;
+			await sqlCommand.ExecuteNonQueryAsync();
+        }]]>
+	  </Code>
+	</Snippet>
+  </CodeSnippet>
+</CodeSnippets>
